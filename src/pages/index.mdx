@@ -1,0 +1,33 @@
+import { graphql } from 'gatsby';
+
+import Layout from '../components/layout';
+import LogoHeading from '../components/logoHeading';
+import Seo from '../components/seo';
+
+<Layout location={props.location} title={props.siteTitle || `Title`}>
+	<LogoHeading/>
+
+    Hi! I'm Ishmaam. I'm an 18-year-old student and software developer. You may enjoy reading some of the [articles](/writing) I've written.
+
+    Reach out: [extroonie@proton.me](mailto:extroonie@proton.me) or @Extroonie on Discord and Telegram
+    <br/>Find me:&nbsp;&nbsp;
+    [GitHub](https://github.com/Extroonie)
+    [Twitter](https://twitter.com/Extroonie)
+
+    I have 5 years of experience as a backend software developer. My expertise is in TypeScript and Node.js for building server-side applications, with working knowledge of Rust and Go gained through self-directed learning. Currently, most of my projects are closed-source, but I plan to publish many of them and work on more complex portfolio projects in the near future.
+
+    I enjoy learning about science, especially physics. I have also developed an appreciation for philosophy and enjoy discussing metaphysical questions, how we know things, free will controversies, logical puzzles, and more. I'm also into learning about theology and different faiths to get more insightful takes. I simply enjoy learning---beyond the horzion.
+
+</Layout>
+
+export const Head = () => <Seo />;
+
+export const pageQuery = graphql`
+	{
+		site {
+			siteMetadata {
+				title
+			}
+		}
+	}
+`;

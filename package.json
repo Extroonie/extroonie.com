@@ -1,0 +1,60 @@
+{
+  "name": "extroonie-site",
+  "private": true,
+  "description": "My website",
+  "version": "0.1.0",
+  "author": "Ishmaam Khan <extroonie@proton.me>",
+  "bugs": {
+    "url": "https://github.com/Extroonie/extroonie.com/issues"
+  },
+  "dependencies": {
+    "@fontsource-variable/montserrat": "^5.0.4",
+    "@fontsource/merriweather": "^5.0.3",
+    "@mdx-js/react": "^3.0.0",
+    "gatsby": "^5.13.0",
+    "gatsby-image": "^3.11.0",
+    "gatsby-plugin-feed": "^5.13.0",
+    "gatsby-plugin-image": "^3.13.0",
+    "gatsby-plugin-manifest": "^5.13.0",
+    "gatsby-plugin-mdx": "^5.13.0",
+    "gatsby-plugin-sharp": "^5.13.0",
+    "gatsby-plugin-typography": "^5.13.0",
+    "gatsby-remark-autolink-headers": "^6.13.0",
+    "gatsby-remark-images": "^7.13.0",
+    "gatsby-remark-prismjs": "^7.13.0",
+    "gatsby-remark-responsive-iframe": "^6.13.0",
+    "gatsby-remark-smartypants": "^6.13.0",
+    "gatsby-source-filesystem": "^5.13.0",
+    "gatsby-transformer-remark": "^6.13.0",
+    "gatsby-transformer-sharp": "^5.13.0",
+    "prismjs": "^1.29.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-typography": "^0.16.23",
+    "typography": "^0.16.24",
+    "typography-theme-wordpress-2016": "^0.16.19"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8"
+  },
+  "homepage": "https://github.com/Extroonie/extroonie.com#readme",
+  "keywords": [
+    "Extroonie"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Extroonie/extroonie.com.git"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "packageManager": "yarn@4.0.2"
+}
