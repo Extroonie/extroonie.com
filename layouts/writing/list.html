@@ -1,0 +1,60 @@
+{{ define "main" }}
+<div class="layout">
+  <header class="global-header">
+    <nav role="navigation" aria-label="Main navigation">
+      <a class="header-link-home" href="/" aria-label="Go to homepage">Home</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <header class="page-header">
+      <h1>My Writing</h1>
+      <p>
+        I wouldn't exactly call it a blog, given the lack of a regular posting
+        schedule, but there are times when I put pen to paper (or fingers to
+        keys), and the result is worth sharing. You might find something
+        enjoyable in one of these musings.
+      </p>
+    </header>
+
+    {{ if .Pages }}
+    <ol class="post-list" role="list">
+      {{ range .Pages }} {{ $dateISO := .Date.Format "2006-01-02T15:04:05Z07:00"
+      }} {{ $dateHuman := .Date.Format "January 2, 2006" }}
+      <li role="listitem">
+        <a
+          href="{{ .Permalink }}"
+          class="post-list-item-link"
+          aria-label="Read {{ .Title }}"
+        >
+          <article
+            class="post-list-item"
+            itemscope
+            itemtype="http://schema.org/BlogPosting"
+          >
+            <header>
+              <h2>
+                <span itemprop="headline">{{ .Title }}</span>
+              </h2>
+              <time datetime="{{ $dateISO }}" itemprop="datePublished">
+                {{ $dateHuman }}
+              </time>
+              <meta itemprop="author" content="{{ .Site.Params.author }}" />
+            </header>
+            <section>
+              <p itemprop="description">
+                {{ if .Params.description }}{{ .Params.description }}{{ else
+                }}{{ .Summary }}{{ end }}
+              </p>
+            </section>
+          </article>
+        </a>
+      </li>
+      {{ end }}
+    </ol>
+    {{ else }}
+    <p>No posts available at the moment.</p>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

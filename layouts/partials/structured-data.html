@@ -1,0 +1,69 @@
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+  {{ if .IsHome }}
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ .Site.Params.description }}",
+  "jobTitle": "Software Developer",
+  "knowsAbout": ["Software Development", "TypeScript", "Node.js", "Physics", "Philosophy"],
+  "sameAs": [
+  "https://twitter.com/{{ .Site.Params.social.twitter }}",
+  "https://github.com/{{ .Site.Params.social.github }}"
+  ],
+  "contactPoint": {
+  "@type": "ContactPoint",
+  "email": "{{ .Site.Params.social.email }}",
+  "contactType": "personal"
+  }
+  {{ else if and .IsPage (eq .Section "writing") }}
+  "@type": "BlogPosting",
+  "headline": "{{ .Title }}",
+  "description": "{{ .Description | default .Summary }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  {{ if .Lastmod }}"dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",{{ end }}
+  "author": {
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}"
+  },
+  "publisher": {
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}"
+  },
+  "url": "{{ .Permalink }}",
+  "wordCount": {{ .WordCount }}{{ if .Params.tags }},
+  "keywords": [{{ range $index, $tag := .Params.tags }}{{ if $index }}, {{ end }}"{{ $tag }}"{{ end }}]{{ end }}
+  {{ else if and .IsSection (eq .Section "writing") }}
+  "@type": "Blog",
+  "name": "{{ .Site.Title }} - Writing",
+  "description": "{{ .Description | default .Site.Params.description }}",
+  "url": "{{ .Permalink }}",
+  "author": {
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}"
+  },
+  "blogPost": [
+  {{ range $index, $page := .Pages }}
+  {{ if $index }},{{ end }}
+  {
+  "@type": "BlogPosting",
+  "headline": "{{ .Title }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "url": "{{ .Permalink }}",
+  "description": "{{ .Description | default .Summary }}"
+  }
+  {{ end }}
+  ]
+  {{ else }}
+  "@type": "WebSite",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ .Site.Params.description }}",
+  "author": {
+  "@type": "Person",
+  "name": "{{ .Site.Params.author }}"
+  }
+  {{ end }}
+  }
+</script>

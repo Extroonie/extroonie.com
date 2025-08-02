@@ -1,0 +1,77 @@
+baseURL = 'https://extroonie.com'
+languageCode = 'en-us'
+title = 'Ishmaam Khan'
+
+enableRobotsTXT = true
+enableGitInfo = true
+disableHugoGeneratorInject = true
+
+[pagination]
+pagerSize = 10
+
+summaryLength = 70
+enableEmoji = true
+
+[minify]
+minifyOutput = true
+[minify.tdewolff]
+[minify.tdewolff.html]
+keepWhitespace = false
+[minify.tdewolff.css]
+keepCSS2 = false
+
+[params]
+author = 'Ishmaam Khan'
+description = "Hi, I'm Ishmaam! I'm a student who spends most of my time developing software and exploring the frontiers of science and philosophy."
+
+keywords = [
+  "software development",
+  "science",
+  "philosophy",
+  "student",
+  "programming",
+]
+images = ["/images/Pale_Blue_Dot.png"]
+
+preload = [{ href = "/images/Pale_Blue_Dot.png", type = "image" }]
+
+[params.social]
+twitter = 'Extroonie'
+github = 'Extroonie'
+email = 'ishmaam@extroonie.com'
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.highlight]
+style = 'github'
+lineNos = true
+codeFences = true
+noClasses = true
+tabWidth = 4
+
+[outputs]
+home = ['HTML', 'RSS', 'JSON']
+section = ['HTML', 'RSS']
+
+[outputFormats.RSS]
+mediaType = 'application/rss+xml'
+baseName = 'rss'
+[outputFormats.JSON]
+mediaType = 'application/json'
+baseName = 'index'
+
+[sitemap]
+changefreq = 'weekly'
+priority = 0.5
+filename = 'sitemap.xml'
+
+[imaging]
+resampleFilter = 'lanczos'
+quality = 85
+anchor = 'smart'
+
+[security]
+[security.funcs]
+getenv = ["^HUGO_", "^CI$"]
