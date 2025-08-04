@@ -1,74 +1,58 @@
 <!doctype html>
-<html
-  lang="{{ .Site.LanguageCode }}"
-  itemscope
-  itemtype="http://schema.org/WebSite"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="{{ .Site.LanguageCode }}" itemscope itemtype="http://schema.org/WebSite">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="darkreader-lock" content="true" />
 
-    {{ block "title" . }}
-    <title>
-      {{ if .IsHome }}{{ .Site.Title }}{{ else if .Title }}{{ .Title }} | {{
-      .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}
-    </title>
-    {{ end }}
+		{{ block "title" . }}
+		<title>
+			{{ if .IsHome }}{{ .Site.Title }}{{ else if .Title }}{{ .Title }} | {{ .Site.Title }}{{ else }}{{
+			.Site.Title }}{{ end }}
+		</title>
+		{{ end }}
 
-    <meta
-      name="description"
-      content="{{ .Description | default .Site.Params.description }}"
-    />
-    <meta name="author" content="{{ .Site.Params.author }}" />
-    <meta name="generator" content="Hugo {{ hugo.Version }}" />
+		<meta name="description" content="{{ .Description | default .Site.Params.description }}" />
+		<meta name="author" content="{{ .Site.Params.author }}" />
+		<meta name="generator" content="Hugo {{ hugo.Version }}" />
 
-    <meta
-      property="og:title"
-      content="{{ if .IsHome }}{{ .Site.Params.author }}{{ else }}{{ .Title }}{{ end }}"
-    />
-    <meta
-      property="og:description"
-      content="{{ .Description | default .Site.Params.description }}"
-    />
-    <meta
-      property="og:type"
-      content="{{ if .IsPage }}article{{ else }}website{{ end }}"
-    />
-    <meta property="og:url" content="{{ .Permalink }}" />
-    {{ with .Site.Params.images }}
-    <meta property="og:image" content="{{ $.Site.BaseURL }}{{ index . 0 }}" />
-    {{ end }}
+		<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Params.author }}{{ else }}{{ .Title }}{{ end }}" />
+		<meta property="og:description" content="{{ .Description | default .Site.Params.description }}" />
+		<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
+		<meta property="og:url" content="{{ .Permalink }}" />
+		{{ with .Site.Params.images }}
+		<meta property="og:image" content="{{ $.Site.BaseURL }}{{ index . 0 }}" />
+		{{ end }}
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@{{ .Site.Params.social.twitter }}" />
-    <meta name="twitter:creator" content="@{{ .Site.Params.social.twitter }}" />
-    {{ with .Site.Params.images }}
-    <meta name="twitter:image" content="{{ $.Site.BaseURL }}{{ index . 0 }}" />
-    {{ end }}
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@{{ .Site.Params.social.twitter }}" />
+		<meta name="twitter:creator" content="@{{ .Site.Params.social.twitter }}" />
+		{{ with .Site.Params.images }}
+		<meta name="twitter:image" content="{{ $.Site.BaseURL }}{{ index . 0 }}" />
+		{{ end }}
 
-    <link rel="canonical" href="{{ .Permalink }}" />
+		<link rel="canonical" href="{{ .Permalink }}" />
 
-    {{ $style := resources.Get "css/style.css" | resources.Minify |
-    resources.Fingerprint }}
-    <link
-      rel="stylesheet"
-      href="{{ $style.Permalink }}"
-      integrity="{{ $style.Data.Integrity }}"
-    />
+		<link rel="preconnect" href="https://github.githubassets.com" />
+		<link rel="stylesheet" href="https://github.githubassets.com/assets/primitives-363ec1831693.css" />
+		<link rel="stylesheet" href="https://github.githubassets.com/assets/github-b64b0b078eab.css" />
 
-    <link rel="icon" href="/images/Pale_Blue_Dot.png" />
-    <link rel="apple-touch-icon" href="/images/Pale_Blue_Dot.png" />
+		{{ $style := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
+		<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}" />
 
-    {{ with .OutputFormats.Get "rss" -}} {{ printf `
-    <link rel="%s" type="%s" href="%s" title="%s" />
-    ` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }} {{ end -}} {{
-    partial "structured-data.html" . }} {{ block "head" . }}{{ end }}
-  </head>
-  <body>
-    {{ block "header" . }}{{ end }}
+		<link rel="icon" href="/images/Pale_Blue_Dot.png" />
+		<link rel="apple-touch-icon" href="/images/Pale_Blue_Dot.png" />
 
-    <main id="main" role="main">{{ block "main" . }}{{ end }}</main>
+		{{ with .OutputFormats.Get "rss" -}} {{ printf `
+		<link rel="%s" type="%s" href="%s" title="%s" />
+		` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }} {{ end -}} {{ partial "structured-data.html" . }}
+		{{ block "head" . }}{{ end }}
+	</head>
+	<body>
+		{{ block "header" . }}{{ end }}
 
-    {{ block "footer" . }}{{ end }}
-  </body>
+		<main id="main" role="main">{{ block "main" . }}{{ end }}</main>
+
+		{{ block "footer" . }}{{ end }}
+	</body>
 </html>

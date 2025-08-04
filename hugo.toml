@@ -25,11 +25,11 @@ author = 'Ishmaam Khan'
 description = "Hi, I'm Ishmaam! I'm a student who spends most of my time developing software and exploring the frontiers of science and philosophy."
 
 keywords = [
-  "software development",
-  "science",
-  "philosophy",
-  "student",
-  "programming",
+	"software development",
+	"science",
+	"philosophy",
+	"student",
+	"programming",
 ]
 images = ["/images/Pale_Blue_Dot.png"]
 

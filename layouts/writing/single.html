@@ -1,68 +1,53 @@
 {{ define "main" }}
 <div class="layout">
-  {{ $dateISO := .Date.Format "2006-01-02T15:04:05Z07:00" }} {{ $dateHuman :=
-  .Date.Format "January 2, 2006" }}
+	{{ $dateISO := .Date.Format "2006-01-02T15:04:05Z07:00" }} {{ $dateHuman := .Date.Format "January 2, 2006" }}
 
-  <header class="global-header">
-    <nav role="navigation" aria-label="Main navigation">
-      <a class="header-link-home" href="/" aria-label="Go to homepage">Home</a>
-      <a
-        class="header-link-all-posts"
-        href="/writing/"
-        aria-label="View all posts"
-        >All Posts</a
-      >
-    </nav>
-  </header>
+	<header class="global-header">
+		<nav role="navigation" aria-label="Main navigation">
+			<a class="header-link-home" href="/" aria-label="Go to homepage">Home</a>
+			<a class="header-link-all-posts" href="/writing/" aria-label="View all posts">All Posts</a>
+		</nav>
+	</header>
 
-  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <header class="post-header">
-      <h1 itemprop="headline">{{ .Title }}</h1>
-      <div class="post-meta">
-        <time datetime="{{ $dateISO }}" itemprop="datePublished">
-          {{ $dateHuman }}
-        </time>
-        {{ if .Lastmod }} {{ $lastmodISO := .Lastmod.Format
-        "2006-01-02T15:04:05Z07:00" }}
-        <meta itemprop="dateModified" content="{{ $lastmodISO }}" />
-        {{ end }}
-        <meta itemprop="author" content="{{ .Site.Params.author }}" />
-        {{ if .Params.description }}
-        <meta itemprop="description" content="{{ .Params.description }}" />
-        {{ end }}
-      </div>
-    </header>
+	<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+		<header class="post-header">
+			<h1 itemprop="headline">{{ .Title }}</h1>
+			<div class="post-meta">
+				<time datetime="{{ $dateISO }}" itemprop="datePublished"> {{ $dateHuman }} </time>
+				{{ if .Lastmod }} {{ $lastmodISO := .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}
+				<meta itemprop="dateModified" content="{{ $lastmodISO }}" />
+				{{ end }}
+				<meta itemprop="author" content="{{ .Site.Params.author }}" />
+				{{ if .Params.description }}
+				<meta itemprop="description" content="{{ .Params.description }}" />
+				{{ end }}
+			</div>
+		</header>
 
-    <section class="post-content" itemprop="articleBody">
-      {{ .Content }}
-    </section>
-  </article>
+		<section class="post-content" itemprop="articleBody">{{ .Content }}</section>
+	</article>
 
-  <nav class="post-nav" role="navigation" aria-label="Post navigation">
-    <ul>
-      <li class="post-nav-prev">
-        {{ if .NextInSection }}
-        <a
-          href="{{ .NextInSection.Permalink }}"
-          rel="prev"
-          aria-label="Previous post: {{ .NextInSection.Title }}"
-        >
-          ← {{ .NextInSection.Title }}
-        </a>
-        {{ end }}
-      </li>
-      <li class="post-nav-next">
-        {{ if .PrevInSection }}
-        <a
-          href="{{ .PrevInSection.Permalink }}"
-          rel="next"
-          aria-label="Next post: {{ .PrevInSection.Title }}"
-        >
-          {{ .PrevInSection.Title }} →
-        </a>
-        {{ end }}
-      </li>
-    </ul>
-  </nav>
+	<nav class="post-nav" role="navigation" aria-label="Post navigation">
+		<ul>
+			<li class="post-nav-prev">
+				{{ if .NextInSection }}
+				<a
+					href="{{ .NextInSection.Permalink }}"
+					rel="prev"
+					aria-label="Previous post: {{ .NextInSection.Title }}"
+				>
+					← {{ .NextInSection.Title }}
+				</a>
+				{{ end }}
+			</li>
+			<li class="post-nav-next">
+				{{ if .PrevInSection }}
+				<a href="{{ .PrevInSection.Permalink }}" rel="next" aria-label="Next post: {{ .PrevInSection.Title }}">
+					{{ .PrevInSection.Title }} →
+				</a>
+				{{ end }}
+			</li>
+		</ul>
+	</nav>
 </div>
 {{ end }}
