@@ -921,6 +921,38 @@ footer {
 	color: var(--color-text);
 }
 
+/* Discord tooltip */
+.discord-tooltip {
+	position: absolute;
+	background: #333;
+	color: white;
+	padding: 6px 10px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	white-space: nowrap;
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-4px);
+	transition:
+		opacity 0.15s ease,
+		transform 0.15s ease;
+	pointer-events: none;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.discord-tooltip.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+.discord-tooltip.copied {
+	background: #333;
+	color: white;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
 	width: 8px;

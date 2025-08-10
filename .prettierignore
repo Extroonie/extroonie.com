@@ -1,0 +1,8 @@
+# Hugo template files
+layouts/**/*.json
+layouts/**/*.xml
+layouts/**/*.rss
+
+# Hugo output
+public/
+resources/

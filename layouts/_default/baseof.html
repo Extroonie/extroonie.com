@@ -38,10 +38,13 @@
 		<link rel="stylesheet" href="https://github.githubassets.com/assets/github-b64b0b078eab.css" />
 
 		{{ $style := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
-		<link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}" />
+		<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" />
 
-		<link rel="icon" href="/images/Pale_Blue_Dot.png" />
-		<link rel="apple-touch-icon" href="/images/Pale_Blue_Dot.png" />
+		{{ $js := resources.Get "js/discord-tooltip.js" | resources.Minify | resources.Fingerprint }}
+		<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+
+		<link rel="icon" href="images/Pale_Blue_Dot.png" />
+		<link rel="apple-touch-icon" href="images/Pale_Blue_Dot.png" />
 
 		{{ with .OutputFormats.Get "rss" -}} {{ printf `
 		<link rel="%s" type="%s" href="%s" title="%s" />
