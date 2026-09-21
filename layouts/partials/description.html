@@ -1,0 +1,9 @@
+{{- $description := .Description | default site.Params.description -}}
+{{- if and .IsSection (eq .Section "writing") -}}
+	{{- $description = (site.GetPage "/writing").Description -}}
+{{- else if eq .Kind "term" -}}
+	{{- $description = printf "Posts and essays tagged #%s by %s." .Data.Term site.Params.author -}}
+{{- else if eq .Kind "taxonomy" -}}
+	{{- $description = printf "Browse %s’s posts and essays by tag." site.Params.author -}}
+{{- end -}}
+{{- return (partial "text.html" $description | plainify | htmlUnescape) -}}

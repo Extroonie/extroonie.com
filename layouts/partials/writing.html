@@ -1,0 +1,7 @@
+{{- $pages := where site.RegularPages "Section" "writing" -}}
+{{- range $pages -}}
+	{{- if not (in (slice "post" "essay") .Params.format) -}}
+		{{- errorf "%s: format must be post or essay" .File.Path -}}
+	{{- end -}}
+{{- end -}}
+{{- return $pages -}}

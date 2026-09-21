@@ -1,0 +1,71 @@
+{{ $archive := site.GetPage "/writing" }}
+{{ $pages := partialCached "writing.html" . }}
+{{ $topic := eq .Kind "term" }}
+{{ $tagIndex := eq .Kind "taxonomy" }}
+{{ if $topic }}
+	{{ $pages = intersect $pages .RegularPages }}
+{{ else }}
+	{{ with .Params.filterKind }}{{ $pages = where $pages "Params.format" . }}{{ end }}
+{{ end }}
+<div class="shell writing-archive">
+	<header>
+		{{ if $tagIndex }}
+			<h1>Tags</h1>
+		{{ else if $topic }}
+			<h1>Writing tagged #{{ .Data.Term }}</h1>
+		{{ else }}
+			<h1>{{ $archive.Title }}</h1>
+			<p class="writing-introduction">{{ partial "text.html" $archive.Description }}</p>
+		{{ end }}
+	</header>
+	<div class="archive-toolbar">
+		<nav class="writing-filters" aria-label="Writing navigation">
+			{{ $current := .RelPermalink }}
+			{{ range slice (dict "path" "/writing" "label" "All writing") (dict "path" "/writing/posts" "label" "Posts") (dict "path" "/writing/essays" "label" "Essays") (dict "path" "/tags" "label" "Tags") }}
+				{{ $page := site.GetPage .path }}
+				<a
+					href="{{ $page.RelPermalink }}"
+					{{ if eq $current $page.RelPermalink }}aria-current="page"{{ end }}
+					>{{ .label }}</a
+				>
+			{{ end }}
+		</nav>
+		{{ with .OutputFormats.Get "RSS" }}
+			<a class="rss-link" href="{{ .RelPermalink }}" aria-label="{{ partial "feed-title.html" $ }} RSS feed"
+				>RSS</a
+			>
+		{{ end }}
+	</div>
+	{{ if $tagIndex }}
+		{{ $tags := slice }}
+		{{ range .Data.Terms.Alphabetical }}
+			{{ if intersect $pages .Pages }}{{ $tags = $tags | append .Page }}{{ end }}
+		{{ end }}
+		{{ if $tags }}
+			<ul class="tag-index" role="list">
+				{{ range $tags }}
+					<li><a href="{{ .RelPermalink }}">#{{ .Data.Term }}</a></li>
+				{{ end }}
+			</ul>
+		{{ else }}
+			<p>No tags yet.</p>
+		{{ end }}
+	{{ else if $pages }}
+		<ul class="writing-list" role="list">
+			{{ range $pages.ByDate.Reverse }}
+				<li>
+					<article class="writing-entry">
+						<h2><a href="{{ .RelPermalink }}">{{ partial "text.html" .Title }}</a></h2>
+						<div class="writing-metadata">
+							{{ partial "publication-date.html" . }}
+							{{ partial "tags.html" . }}
+						</div>
+						{{ with .Description }}<p>{{ partial "text.html" . }}</p>{{ end }}
+					</article>
+				</li>
+			{{ end }}
+		</ul>
+	{{ else }}
+		<p>{{ with .Params.filterKind }}No {{ . }}s yet.{{ else }}No writing yet.{{ end }}</p>
+	{{ end }}
+</div>

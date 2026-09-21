@@ -1,0 +1,46 @@
+{{ define "main" }}
+	{{ $hasContents := .Store.Get "hasContents" }}
+	<article class="shell">
+		<header class="article-intro">
+			<a class="all-writing" href="/writing/">← All writing</a>
+			<h1>{{ partial "text.html" .Title }}</h1>
+			{{ with .Params.subtitle }}<p class="subtitle">{{ partial "text.html" . }}</p>{{ end }}
+			{{ partial "tags.html" . }}
+			<div class="publication">
+				{{ partial "publication-date.html" . }}
+				{{ if $hasContents }}
+					<button class="contents-reopen" aria-controls="article-navigation" aria-expanded="false" hidden>
+						Contents
+					</button>
+				{{ end }}
+			</div>
+		</header>
+		{{ if $hasContents }}
+			<details class="article-contents">
+				<summary aria-controls="article-navigation">Contents</summary>
+				<div id="article-navigation">
+					<div class="contents-heading" hidden>
+						<span>Contents</span>
+						<button class="contents-close" aria-label="Close contents">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					{{ .Store.Get "contents" }}
+				</div>
+			</details>
+		{{ end }}
+		<div class="prose article-prose">
+			{{ with .Params.abstract }}
+				<section class="abstract">
+					<h2 id="abstract" tabindex="-1">
+						<a class="heading-link" href="#abstract"
+							>Abstract<span class="heading-anchor" aria-hidden="true">#</span></a
+						>
+					</h2>
+					<p>{{ partial "text.html" . }}</p>
+				</section>
+			{{ end }}{{ .Content }}
+			{{ with .Params.pdf }}<p><a href="{{ . }}">Download PDF</a></p>{{ end }}
+		</div>
+	</article>
+{{ end }}

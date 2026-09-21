@@ -1,0 +1,1 @@
+{{- $id := .Get 0 -}}{{- $label := .Get 1 | default "equation" -}}<a href="#eq-{{ $id | urlize }}">{{ $label }}</a>

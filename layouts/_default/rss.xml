@@ -1,0 +1,7 @@
+{{- $pages := partialCached "writing.html" . -}}
+{{- if and (not .IsHome) (ne .Section "writing") }}{{ $pages = .RegularPages }}{{ end -}}
+{{- with .Params.filterKind }}{{ $pages = where $pages "Params.format" . }}{{ end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>{{ partial "feed-title.html" . }}</title><link>{{ with .OutputFormats.Get "HTML" }}{{ .Permalink }}{{ end }}</link><description>{{ partial "description.html" (site.GetPage "/writing") }}</description><language>{{ site.Language.Locale }}</language>{{ with .OutputFormats.Get "RSS" }}<atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml"/>{{ end }}
+{{ range first 30 $pages.ByDate.Reverse }}<item><title>{{ partial "text.html" .Title | plainify | htmlUnescape }}</title><link>{{ .Permalink }}</link><guid>{{ .Permalink }}</guid><pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate><description>{{ partial "text.html" (.Description | default (.Summary | plainify)) | plainify | htmlUnescape }}</description></item>{{ end }}
+</channel></rss>

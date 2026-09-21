@@ -1,0 +1,3 @@
+{{- $label := "Writing" -}}
+{{- if .Params.filterKind }}{{ $label = .Title }}{{ end -}}
+{{- return (printf "%s — %s" site.Title $label) -}}

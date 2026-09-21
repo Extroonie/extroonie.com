@@ -1,0 +1,26 @@
+{
+	"name": "extroonie",
+	"private": true,
+	"version": "1.0.0",
+	"license": "CC0-1.0",
+	"type": "module",
+	"scripts": {
+		"build": "bun scripts/build.mjs",
+		"check": "bun scripts/check.mjs",
+		"test": "bun scripts/test.mjs && bun scripts/test-contents.mjs && bun scripts/test-footnotes.mjs && bun scripts/test-preview.mjs",
+		"test:deploy": "bun scripts/test-deploy.mjs",
+		"format": "bun scripts/format.mjs --write",
+		"format:check": "bun scripts/format.mjs --check",
+		"dev": "bun scripts/preview.mjs"
+	},
+	"devDependencies": {
+		"@fontsource-variable/newsreader": "5.3.0",
+		"katex": "0.18.7",
+		"prettier": "3.9.8",
+		"prettier-plugin-go-template": "0.0.15"
+	},
+	"packageManager": "bun@1.4.2",
+	"overrides": {
+		"ulid": "3.0.2"
+	}
+}

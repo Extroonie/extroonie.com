@@ -1,0 +1,15 @@
+{{ define "main" }}
+	<div class="shell">
+		<section class="intro" aria-label="Introduction">
+			<p>{{ partial "text.html" .Params.introduction }}</p>
+			<p>You might enjoy <a href="/writing/">some of my writing</a>.</p>
+			{{ partial "contacts.html" . }}
+			<div class="biography" id="about">
+				<div class="contents">
+					<span>On this page</span>{{ .Store.Get "contents" }}
+				</div>
+				<div class="prose home-prose">{{ .Content }}</div>
+			</div>
+		</section>
+	</div>
+{{ end }}

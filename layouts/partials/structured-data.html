@@ -1,0 +1,7 @@
+{{ $data := dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.BaseURL }}
+{{ if .IsHome }}
+	{{ $data = dict "@context" "https://schema.org" "@type" "Person" "name" site.Params.author "url" .Permalink }}
+{{ else if and .IsPage (eq .Section "writing") }}
+	{{ $data = dict "@context" "https://schema.org" "@type" "BlogPosting" "headline" (partial "text.html" .Title | plainify | htmlUnescape) "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00") "url" .Permalink "author" (dict "@type" "Person" "name" site.Params.author) }}
+{{ end }}
+<script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>

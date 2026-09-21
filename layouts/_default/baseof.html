@@ -1,0 +1,71 @@
+{{- $content := .Content -}}
+{{- $contents := partial "contents.html" . -}}
+{{- .Store.Set "contents" $contents -}}
+{{- $hasContents := and .IsPage (eq .Section "writing") (ge (len (findRE `<a href=` $contents)) 2) -}}
+{{- .Store.Set "hasContents" $hasContents -}}
+<!doctype html>
+<html lang="en" id="top">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		{{ $theme := resources.Get "js/theme-init.js" | minify }}<script>{{ $theme.Content | safeJS }}</script>
+		{{ $title := partial "text.html" .Title | plainify | htmlUnescape }}
+		{{ $description := partial "description.html" . }}
+		{{ if eq .Kind "term" }}
+			{{ $title = printf "Writing tagged #%s" .Data.Term }}
+		{{ end }}
+		{{ $documentTitle := $title }}
+		{{ if not .IsHome }}{{ $documentTitle = printf "%s · %s" $title site.Title }}{{ end }}
+		<title>{{ $documentTitle }}</title>
+		<meta name="description" content="{{ $description }}" />
+		<meta name="author" content="{{ site.Params.author }}" />
+		{{ if site.Params.preview }}<meta name="robots" content="noindex, nofollow" />{{ end }}
+		<link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/" />
+		<link rel="canonical" href="{{ .Permalink }}" />
+		<meta property="og:title" content="{{ $title }}" />
+		<meta property="og:description" content="{{ $description }}" />
+		<meta property="og:url" content="{{ .Permalink }}" />
+		{{ $type := cond (and .IsPage (eq .Section "writing")) "article" "website" }}
+		<meta property="og:type" content="{{ $type }}" />
+		{{ partialCached "site-images.html" . }}
+		<link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+		{{ $css := resources.Get "css/style.css" | minify | fingerprint }}
+		<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" />
+		{{ with .OutputFormats.Get "RSS" }}
+			<link
+				rel="alternate"
+				type="application/rss+xml"
+				href="{{ .Permalink }}"
+				title="{{ partial "feed-title.html" $ }}"
+			/>
+		{{ end }}
+		{{ if or (.Store.Get "hasMath") .Params.math }}
+			<link rel="stylesheet" href="/vendor/katex/katex.min.css" />
+		{{ end }}
+		{{ partial "structured-data.html" . }}
+	</head>
+	<body
+		class="{{ if .IsHome }}
+			home-page
+		{{ else if .IsPage }}
+			article-page
+		{{ else }}
+			archive-page
+		{{ end }}{{ if $hasContents }}has-contents{{ end }}"
+	>
+		{{ partial "header.html" . }}
+		<main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+		{{ partial "footer.html" . }}
+		{{ $js := resources.Get "js/main.js" | minify | fingerprint }}
+		<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+		{{ if $hasContents }}
+			{{ $navigation := resources.Get "js/contents.js" | minify | fingerprint }}
+			<script src="{{ $navigation.RelPermalink }}" integrity="{{ $navigation.Data.Integrity }}" defer></script>
+		{{ end }}
+		{{ if strings.Contains $content "class=\"footnote-ref\"" }}
+			{{ $footnotes := resources.Get "js/footnotes.js" | minify | fingerprint }}
+			<script src="{{ $footnotes.RelPermalink }}" integrity="{{ $footnotes.Data.Integrity }}" defer></script>
+		{{ end }}
+	</body>
+</html>

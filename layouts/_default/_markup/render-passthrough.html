@@ -1,0 +1,7 @@
+{{- .Page.Store.Set "hasMath" true -}}
+{{- $math := transform.ToMath .Inner (dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") "strict" "warn") -}}
+{{- if eq .Type "block" -}}
+	<div class="math-display" tabindex="0" aria-label="Mathematical equation">{{ $math }}</div>
+{{- else -}}
+	{{ $math }}
+{{- end -}}

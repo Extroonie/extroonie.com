@@ -1,0 +1,4 @@
+---
+title: Essays
+filterKind: essay
+---

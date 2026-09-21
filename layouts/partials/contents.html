@@ -1,0 +1,10 @@
+{{- $contents := .TableOfContents -}}
+{{- if and .IsPage (eq .Section "writing") .Params.abstract -}}
+	{{- if strings.Contains $contents "<ul>" -}}
+		{{- $contents = replace $contents "<ul>" `<ul><li><a href="#abstract">Abstract</a></li>` 1 -}}
+	{{- else -}}
+		{{- $contents = `<nav id="TableOfContents"><ul><li><a href="#abstract">Abstract</a></li></ul></nav>` -}}
+	{{- end -}}
+{{- end -}}
+{{- $label := cond .IsHome "On this page" "Contents" -}}
+{{- return ($contents | replaceRE `<nav id="TableOfContents">` (printf `<nav id="TableOfContents" aria-label="%s">` $label) | safeHTML) -}}

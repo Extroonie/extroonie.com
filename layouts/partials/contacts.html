@@ -1,0 +1,19 @@
+<div class="contact-links" aria-label="Contact and profiles">
+	<span>Reach out:</span>{{ range hugo.Data.contacts.links }}
+		{{ if .username }}
+			<span class="discord-contact"
+				><button
+					hidden
+					class="contact-link"
+					type="button"
+					data-copy="{{ .username }}"
+					aria-label="Copy Discord username: {{ .username }}"
+				>
+					{{ .name }}</button
+				><span class="discord-fallback">{{ .name }}: <span>{{ .username }}</span></span></span
+			>
+		{{ else }}
+			<a class="contact-link" href="{{ .url }}">{{ .name }}</a>
+		{{ end }}
+	{{ end }}
+</div>

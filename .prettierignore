@@ -1,0 +1,10 @@
+layouts/**/*.json
+layouts/**/*.xml
+layouts/**/*.rss
+
+dist/
+public/
+resources/
+
+# The template formatter cannot parse dynamic heading tags such as <h{{ .Level }}>.
+layouts/_default/_markup/render-heading.html

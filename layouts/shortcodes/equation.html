@@ -1,0 +1,14 @@
+{{- .Page.Store.Set "hasMath" true -}}
+{{- $id := .Get "id" -}}
+{{- if not $id }}{{ errorf "equation requires an id: %s" .Position }}{{ end -}}
+{{- $count := .Page.Store.Get "equationCount" | default 0 -}}
+{{- $number := add $count 1 -}}{{- .Page.Store.Set "equationCount" $number -}}
+{{- with .Get "number" }}{{ $number = . }}{{ end -}}
+<div class="numbered-equation" id="eq-{{ $id | urlize }}">
+	<div class="math-display" tabindex="0" aria-label="Equation {{ $number }}">
+		{{ transform.ToMath .Inner (dict "output" "htmlAndMathml" "displayMode" true "strict" "warn") }}
+	</div>
+	<a class="equation-number" href="#eq-{{ $id | urlize }}" aria-label="Link to equation {{ $number }}"
+		>({{ $number }})</a
+	>
+</div>
